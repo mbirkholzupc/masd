@@ -1,0 +1,2 @@
+module prometheus_doc {
+}
