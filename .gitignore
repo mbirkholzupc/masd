@@ -28,3 +28,7 @@ hs_err_pid*
 # Eclipse stuff
 .project
 .classpath
+
+# Jadex stuff
+platform_auto.conf
+jcc.settings.json
