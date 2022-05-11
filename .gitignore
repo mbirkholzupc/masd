@@ -24,3 +24,7 @@ hs_err_pid*
 
 # PDT Backup File
 *.bk
+
+# Eclipse stuff
+.project
+.classpath

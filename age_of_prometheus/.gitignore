@@ -1,0 +1,12 @@
+# Gradle stuff
+.gradle
+build/
+
+gradle-app.setting
+
+# Don't ignore these even though jars are ignored
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# Local user stuff
+settings_mike-mint
