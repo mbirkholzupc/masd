@@ -30,12 +30,15 @@
 	</imports>
 	
 	<extensiontypes>
-		<env:envspacetype name="2dspace" class="Grid2D" width="30" height="30">
+		<env:envspacetype name="2dspace" class="Grid2D" width="40" height="40">
 			<env:objecttypes>
 				<env:objecttype name="hunter">
 					<env:property name="position" event="true"/>
 				</env:objecttype>
 				<env:objecttype name="prey">
+					<env:property name="position" event="true"/>
+				</env:objecttype>
+				<env:objecttype name="neutral">
 					<env:property name="position" event="true"/>
 				</env:objecttype>
 				<env:objecttype name="obstacle" />
@@ -87,6 +90,7 @@
 				<env:avatarmapping componenttype="CleverPrey" objecttype="prey"/>
 				<env:avatarmapping componenttype="DumbHunter" objecttype="hunter"/>
 				<env:avatarmapping componenttype="LAHunter" objecttype="hunter"/>
+				<env:avatarmapping componenttype="Neutral" objecttype="neutral"/>
 			</env:avatarmappings>
 			
 			<env:percepttypes>
@@ -249,13 +253,13 @@
 			<env:perspectives>
 				<env:perspective name="icons" class="Perspective2D" objectplacement="center">
 					<env:drawable objecttype="food" width="1.0" height="1.0">
-						<env:texturedrectangle layer="0" size="size" imagepath="jadex/bdi/examples/hunterprey/images/food.png" />
+						<env:texturedrectangle layer="0" size="size" imagepath="aop/images/food.png" />
 					</env:drawable>
 					<env:drawable objecttype="obstacle" width="1.0" height="1.0">
-						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="jadex/bdi/examples/hunterprey/images/obstacle.png" />
+						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/obstacle.png" />
 					</env:drawable>
 					<env:drawable objecttype="prey" width="1.0" height="1.0">
-						<env:texturedrectangle layer="1" width="0.9" height="0.9" imagepath="jadex/bdi/examples/hunterprey/images/prey.png" />
+						<env:texturedrectangle layer="1" width="0.9" height="0.9" imagepath="aop/images/prey.png" />
 						<env:rectangle layer="-1" width="3" height="3" color="#ffff007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="-2" y="0" color="#ffff007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="2" y="0" color="#ffff007f" />
@@ -263,7 +267,15 @@
 						<env:rectangle layer="-1" width="1" height="1" x="0" y="2" color="#ffff007f" />
 					</env:drawable>
 					<env:drawable objecttype="hunter" width="1.0" height="1.0">
-						<env:texturedrectangle layer="2" width="0.9" height="0.9" imagepath="jadex/bdi/examples/hunterprey/images/hunter.png" />
+						<env:texturedrectangle layer="2" width="0.9" height="0.9" imagepath="aop/images/hunter.png" />
+						<env:rectangle layer="-1" width="3" height="3" color="#ff00007f" />
+						<env:rectangle layer="-1" width="1" height="1" x="-2" y="0" color="#ff00007f" />
+						<env:rectangle layer="-1" width="1" height="1" x="2" y="0" color="#ff00007f" />
+						<env:rectangle layer="-1" width="1" height="1" x="0" y="-2" color="#ff00007f" />
+						<env:rectangle layer="-1" width="1" height="1" x="0" y="2" color="#ff00007f" />
+					</env:drawable>
+					<env:drawable objecttype="neutral" width="1.0" height="1.0">
+						<env:texturedrectangle layer="2" width="0.9" height="0.9" imagepath="aop/images/neutral.png" />
 						<env:rectangle layer="-1" width="3" height="3" color="#ff00007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="-2" y="0" color="#ff00007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="2" y="0" color="#ff00007f" />
@@ -271,7 +283,7 @@
 						<env:rectangle layer="-1" width="1" height="1" x="0" y="2" color="#ff00007f" />
 					</env:drawable>
 					<env:prelayers>
-						<env:tiledlayer width="0.4" height="0.4" imagepath="jadex/bdi/examples/hunterprey/images/background.png" />
+						<env:tiledlayer width="0.4" height="0.4" imagepath="aop/images/background.png" />
 					</env:prelayers>
 					<env:postlayers>
 						<env:gridlayer width="1.0" height="1.0" color="black" />
@@ -289,6 +301,9 @@
 						<env:regularpolygon layer="2" width="0.9" height="0.9" vertices="5" color="#CCCCCC" />
 					</env:drawable>
 					<env:drawable objecttype="hunter" width="1.0" height="1.0">
+						<env:regularpolygon layer="2" width="0.9" height="0.9" vertices="8" color="#3366FF" />
+					</env:drawable>
+					<env:drawable objecttype="neutral" width="1.0" height="1.0">
 						<env:regularpolygon layer="2" width="0.9" height="0.9" vertices="8" color="#3366FF" />
 					</env:drawable>
 					<env:prelayers>
@@ -310,10 +325,11 @@
 	</extensiontypes>
 
 	<componenttypes>
-		<componenttype name="DumbPrey" filename="jadex/bdi/examples/hunterprey/dumbprey/DumbPrey.agent.xml"/>
-		<componenttype name="CleverPrey" filename="jadex/bdi/examples/hunterprey/cleverprey/CleverPrey.agent.xml"/>
-		<componenttype name="DumbHunter" filename="jadex/bdi/examples/hunterprey/dumbhunter/DumbHunter.agent.xml"/>
-		<componenttype name="LAHunter" filename="jadex/bdi/examples/hunterprey/ldahunter/LAHunter.agent.xml"/>
+		<componenttype name="DumbPrey" filename="aop/dumbprey/DumbPrey.agent.xml"/>
+		<componenttype name="CleverPrey" filename="aop/cleverprey/CleverPrey.agent.xml"/>
+		<componenttype name="DumbHunter" filename="aop/dumbhunter/DumbHunter.agent.xml"/>
+		<componenttype name="LAHunter" filename="aop/ldahunter/LAHunter.agent.xml"/>
+		<componenttype name="Neutral" filename="aop/neutral/Neutral.agent.xml"/>
 	</componenttypes>
 
 	<configurations>
@@ -346,6 +362,7 @@
 				<component type="DumbHunter" name="Lenny"/>
 				<component type="DumbHunter" name="Louis"/>
 				<component type="LAHunter" name="Willy"/>
+				<component type="Neutral" name="Smiley"/>
 				<!-- <component type="LAHunter" name="Wolfram"/> -->
 			</components>
  		</configuration>
