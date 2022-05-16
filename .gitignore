@@ -32,3 +32,6 @@ hs_err_pid*
 # Jadex stuff
 platform_auto.conf
 jcc.settings.json
+
+# Vim files
+*.swp
