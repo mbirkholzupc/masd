@@ -30,7 +30,7 @@
 	</imports>
 	
 	<extensiontypes>
-		<env:envspacetype name="2dspace" class="Grid2D" width="30" height="30">
+		<env:envspacetype name="2dspace" class="Grid2D" width="20" height="20">
 			<env:objecttypes>
 				<env:objecttype name="hunter">
 					<env:property name="position" event="true"/>
@@ -39,6 +39,7 @@
 					<env:property name="position" event="true"/>
 				</env:objecttype>
 				<env:objecttype name="obstacle" />
+				<env:objecttype name="tree" />
 				<env:objecttype name="food" >
 				    <env:property name="clock" />
 				    <env:property name="creation_age" />
@@ -67,6 +68,7 @@
 						((Grid2D)$space).getEmptyGridPosition()!=null
 					</env:property>
 				</env:processtype>
+				<env:processtype name="init" class="InitMapProcess" />
 			</env:processtypes>
 			
 			<env:dataviews>
@@ -249,13 +251,16 @@
 			<env:perspectives>
 				<env:perspective name="icons" class="Perspective2D" objectplacement="center">
 					<env:drawable objecttype="food" width="1.0" height="1.0">
-						<env:texturedrectangle layer="0" size="size" imagepath="jadex/bdi/examples/hunterprey/images/food.png" />
+						<env:texturedrectangle layer="0" size="size" imagepath="aop/images/food.png" />
 					</env:drawable>
 					<env:drawable objecttype="obstacle" width="1.0" height="1.0">
-						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="jadex/bdi/examples/hunterprey/images/obstacle.png" />
+						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/obstacle.png" />
+					</env:drawable>
+					<env:drawable objecttype="tree" width="1.0" height="1.0">
+						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/tree.png" />
 					</env:drawable>
 					<env:drawable objecttype="prey" width="1.0" height="1.0">
-						<env:texturedrectangle layer="1" width="0.9" height="0.9" imagepath="jadex/bdi/examples/hunterprey/images/prey.png" />
+						<env:texturedrectangle layer="1" width="0.9" height="0.9" imagepath="aop/images/prey.png" />
 						<env:rectangle layer="-1" width="3" height="3" color="#ffff007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="-2" y="0" color="#ffff007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="2" y="0" color="#ffff007f" />
@@ -263,7 +268,7 @@
 						<env:rectangle layer="-1" width="1" height="1" x="0" y="2" color="#ffff007f" />
 					</env:drawable>
 					<env:drawable objecttype="hunter" width="1.0" height="1.0">
-						<env:texturedrectangle layer="2" width="0.9" height="0.9" imagepath="jadex/bdi/examples/hunterprey/images/hunter.png" />
+						<env:texturedrectangle layer="2" width="0.9" height="0.9" imagepath="aop/images/hunter.png" />
 						<env:rectangle layer="-1" width="3" height="3" color="#ff00007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="-2" y="0" color="#ff00007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="2" y="0" color="#ff00007f" />
@@ -271,7 +276,7 @@
 						<env:rectangle layer="-1" width="1" height="1" x="0" y="2" color="#ff00007f" />
 					</env:drawable>
 					<env:prelayers>
-						<env:tiledlayer width="0.4" height="0.4" imagepath="jadex/bdi/examples/hunterprey/images/background.png" />
+						<env:tiledlayer width="0.4" height="0.4" imagepath="aop/images/background.png" />
 					</env:prelayers>
 					<env:postlayers>
 						<env:gridlayer width="1.0" height="1.0" color="black" />
@@ -283,6 +288,9 @@
 						<env:rectangle layer="0" width="0.3" height="0.3" color="green" />
 					</env:drawable>
 					<env:drawable objecttype="obstacle" width="1.0" height="1.0">
+						<env:triangle layer="0" width="0.9" height="0.9" rotatez="3.14159" color="#996600" />
+					</env:drawable>
+					<env:drawable objecttype="tree" width="1.0" height="1.0">
 						<env:triangle layer="0" width="0.9" height="0.9" rotatez="3.14159" color="#996600" />
 					</env:drawable>
 					<env:drawable objecttype="prey" width="1.0" height="1.0">
@@ -320,13 +328,20 @@
 		<configuration name="Classic">
 			<extensions>
 				<env:envspace name="my2dspace" type="2dspace">
+                    <!--
 					<env:objects>
 						<env:object type="obstacle" number="125"/>
 					</env:objects>
+                    -->
 					
 					<env:processes>
+                        <!--
 						<env:process type="create">
 							<env:property name="tickrate">5</env:property>
+						</env:process>
+                        -->
+						<env:process type="init">
+							<env:property name="mapfile">"thisistheparametermapfile!!!"</env:property>
 						</env:process>
 					</env:processes>
 	
@@ -348,106 +363,6 @@
 				<component type="LAHunter" name="Willy"/>
 				<!-- <component type="LAHunter" name="Wolfram"/> -->
 			</components>
- 		</configuration>
-
-		<configuration name="Land of Peace">
-			<extensions>
-				<env:envspace name="my2dspace" type="2dspace">
-					<env:objects>
-						<env:object type="obstacle" number="125"/>
-					</env:objects>
-					
-					<env:processes>
-						<env:process type="create">
-							<env:property name="tickrate">5</env:property>
-						</env:process>
-					</env:processes>
-	
-					<env:observers>
-						<env:observer name="HunterPrey World" dataview="view_all" perspective="icons" />
-					</env:observers>
-	 			</env:envspace>
-			</extensions>
-			<components>
-				<component type="DumbPrey" number="50"/>
-				<component type="CleverPrey" number="40" configuration="Clever"/>
-				<component type="CleverPrey" number="10" configuration="Opportunistic"/>
-			</components>
- 		</configuration>
- 		
-		<configuration name="Lupo's Paradise">
-			<extensions>
-				<env:envspace name="my2dspace" type="2dspace">
-					<env:objects>
-						<env:object type="obstacle" number="125"/>
-					</env:objects>
-					
-					<env:processes>
-						<env:process type="create">
-							<env:property name="tickrate">5</env:property>
-						</env:process>
-					</env:processes>
-	
-					<env:observers>
-						<env:observer name="HunterPrey World" dataview="view_all" perspective="icons" />
-					</env:observers>
-	 			</env:envspace>
-			</extensions>
-			<components>
-				<component type="DumbPrey" number="80"/>
-				<component type="CleverPrey" number="10" configuration="Clever"/>
-				<component type="CleverPrey" number="5" configuration="Opportunistic"/>
-				<component type="CleverPrey" number="5" configuration="Lazy"/>
-				<component name="Lupo" type="DumbHunter"/>
-			</components>
- 		</configuration>
-
-		<configuration name="Battlefield">
-			<extensions>
-				<env:envspace name="my2dspace" type="2dspace">
-					<env:objects>
-						<env:object type="obstacle" number="125"/>
-					</env:objects>
-	
-					<env:processes>
-						<env:process type="create">
-							<env:property name="tickrate">1</env:property>
-						</env:process>
-					</env:processes>
-	
-					<env:observers>
-						<env:observer name="HunterPrey World" dataview="view_all" perspective="icons" killonexit="true"/>
-					</env:observers>
-	 			</env:envspace>
-			</extensions>
-			<components>
-				<component type="DumbPrey" number="100"/>
-				<component type="CleverPrey" number="50" configuration="Clever"/>
-				<component type="CleverPrey" number="25" configuration="Opportunistic"/>
-				<component type="CleverPrey" number="25" configuration="Lazy"/>
-				<component type="DumbHunter" number="25"/>
-				<component type="LAHunter" number="5"/>
-			</components>
- 		</configuration>
-
-		<configuration name="Empty (no creatures)">
-			<extensions>
-				<env:envspace name="my2dspace" type="2dspace">
-					<env:objects>
-						<env:object type="obstacle" number="125"/>
-					</env:objects>
-	
-					<env:processes>
-						<env:process type="create">
-							<env:property name="tickrate">10</env:property>
-						</env:process>
-					</env:processes>
-	
-					<env:observers>
-						<env:observer name="HunterPrey World" dataview="view_all" perspective="icons"/>
-					</env:observers>
-	 			</env:envspace>
-			</extensions>
  		</configuration>
 	</configurations>
 </applicationtype>
