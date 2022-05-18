@@ -98,6 +98,24 @@
 						<env:componenttype name="CleverPrey"/>
 					</env:componenttypes>
 				</env:percepttype>
+				<env:percepttype name="tree_seen" objecttype="tree">
+					<env:componenttypes>
+						<env:componenttype name="DumbPrey"/>
+						<env:componenttype name="CleverPrey"/>
+					</env:componenttypes>
+				</env:percepttype>
+				<env:percepttype name="tree_out_of_sight" objecttype="tree">
+					<env:componenttypes>
+						<env:componenttype name="DumbPrey"/>
+						<env:componenttype name="CleverPrey"/>
+					</env:componenttypes>
+				</env:percepttype>
+				<env:percepttype name="tree_grabbed" objecttype="food">
+					<env:componenttypes>
+						<env:componenttype name="DumbPrey"/>
+						<env:componenttype name="CleverPrey"/>
+					</env:componenttypes>
+				</env:percepttype>
 				<env:percepttype name="food_out_of_sight" objecttype="food">
 					<env:componenttypes>
 						<env:componenttype name="DumbPrey"/>
@@ -166,7 +184,10 @@
 							new String[]{"hunter_seen", "appeared", "created"}, 
 							new String[]{"hunter_gone", "disappeared", "destroyed"},
 							new String[]{"obstacle_seen", "appeared", "created"}, 
-							new String[]{"obstacle_gone", "disappeared", "destroyed"}
+							new String[]{"obstacle_gone", "disappeared", "destroyed"},
+							new String[]{"tree_seen", "appeared", "created"},
+							new String[]{"tree_out_of_sight", "disappeared"},
+							new String[]{"tree_grabbed", "destroyed"}
 						}
 					</env:property>
 				</env:perceptgenerator>
@@ -194,7 +215,10 @@
 						{
 							new String[]{"food_seen", "set", "nearest_food", "isNearer"},
 							new String[]{"food_eaten", "unset", "nearest_food", "isFact"},
-							new String[]{"food_out_of_sight", "unset", "nearest_food", "isFact"}
+							new String[]{"food_out_of_sight", "unset", "nearest_food", "isFact"},
+							new String[]{"tree_out_of_sight", "unset", "nearest_tree", "isFact"},
+							new String[]{"tree_seen", "set", "nearest_tree", "isNearer"},
+							new String[]{"tree_grabbed", "unset", "nearest_tree", "isFact"}
 						}
 					</env:property>
 					<env:property name="isNearer" dynamic="true">
@@ -246,6 +270,7 @@
 			<env:actiontypes>
 				<env:actiontype name="move" class="MoveAction" />
 				<env:actiontype name="eat" class="EatAction" />
+				<env:actiontype name="grab" class="GrabResourceAction" />
 			</env:actiontypes>
 			
 			<env:perspectives>
@@ -353,14 +378,7 @@
  			<components>
 				<component type="DumbPrey" name="Dumbo"/>
 				<!-- <component type="DumbPrey" name="Duffy"/> -->
-				<component type="CleverPrey" name="Heinz" configuration="Lazy"/>
-				<!-- <component type="CleverPrey" name="Harald" configuration="Lazy"/> -->
-				<component type="CleverPrey" name="Otto" configuration="Opportunistic"/>
-				<component type="CleverPrey" name="Clever" configuration="Clever"/>
-				<!-- <component type="CleverPrey" name="Charlton" configuration="Clever"/> -->
-				<component type="DumbHunter" name="Lenny"/>
-				<component type="DumbHunter" name="Louis"/>
-				<component type="LAHunter" name="Willy"/>
+
 				<!-- <component type="LAHunter" name="Wolfram"/> -->
 			</components>
  		</configuration>

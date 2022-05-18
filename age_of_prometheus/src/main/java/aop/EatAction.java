@@ -9,6 +9,7 @@ import jadex.extension.envsupport.environment.ISpaceAction;
 import jadex.extension.envsupport.environment.ISpaceObject;
 import jadex.extension.envsupport.environment.space2d.Grid2D;
 import jadex.extension.envsupport.environment.space2d.Space2D;
+import jadex.extension.envsupport.math.IVector2;
 
 
 /**
@@ -22,6 +23,12 @@ public class EatAction extends SimplePropertyObject implements ISpaceAction
 	public static final String	PROPERTY_POINTS	= "points";
 
 	// -------- IAgentAction interface --------
+
+	public int getManhattanDistance(IVector2 pos1, IVector2 pos2){
+		int xDiff = Math.abs(pos1.getX().getAsInteger() - pos2.getX().getAsInteger());
+		int yDiff = Math.abs(pos1.getY().getAsInteger() - pos2.getY().getAsInteger());
+		return xDiff + yDiff;
+	}
 
 	/**
 	 * Performs the action.
@@ -42,6 +49,11 @@ public class EatAction extends SimplePropertyObject implements ISpaceAction
 		if(null == space.getSpaceObject(target.getId()))
 		{
 			throw new RuntimeException("No such object in space: " + target);
+		}
+
+		// prohibit agents to grab resources at
+		if(getManhattanDistance((IVector2)avatar.getProperty(Space2D.PROPERTY_POSITION), (IVector2)target.getProperty(Space2D.PROPERTY_POSITION)) > 1){
+			throw new RuntimeException("Can only grab objects at distance <= 1.");
 		}
 
 		if(!avatar.getProperty(Space2D.PROPERTY_POSITION).equals(target.getProperty(Space2D.PROPERTY_POSITION)))

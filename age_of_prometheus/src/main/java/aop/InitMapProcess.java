@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.lang.Math;
 
 import jadex.bridge.service.types.clock.IClockService;
 import jadex.commons.SUtil;
@@ -85,14 +86,28 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 			//String type = (String)imagenames.get(key);
 			String type = "tree";
 			Map props = new HashMap();
-			props.put(Space2D.PROPERTY_POSITION, new Vector2Int(5, 5));
+			/*props.put(Space2D.PROPERTY_POSITION, new Vector2Int(5, 5));
 			grid.createSpaceObject("tree", props, null);
 //			    					System.out.println(x+" "+y+" "+type);
 
 			props = new HashMap();
 			props.put(Space2D.PROPERTY_POSITION, new Vector2Int(5, 6));
-			grid.createSpaceObject("tree", props, null);
+			grid.createSpaceObject("tree", props, null);*/
 
+			int x_axis_length = grid.getAreaSize().getX().getAsInteger();
+			int y_axis_length = grid.getAreaSize().getY().getAsInteger();
+			for(double i=0; i<x_axis_length; i++){
+				for(double j=0; j<y_axis_length; j++){
+					double probability_decrease = 0.2;
+					double random_number = Math.random() + probability_decrease;
+					System.out.println(random_number + " " + (i/x_axis_length) + " " + (j/y_axis_length));
+					if(random_number < (i/x_axis_length) && random_number < (j/y_axis_length)){
+						props = new HashMap();
+						props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)i, (int)j));
+						grid.createSpaceObject("tree", props, null);
+					}
+				}
+			}
             /*
 			final Space2D grid = (Space2D)space;
 //			ClassLoader cl = space.getExternalAccess().getModel().getClassLoader();

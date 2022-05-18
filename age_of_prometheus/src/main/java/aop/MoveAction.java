@@ -54,12 +54,11 @@ public class MoveAction extends SimplePropertyObject implements ISpaceAction
 	public Object perform(Map parameters, IEnvironmentSpace space)
 	{
 //		System.out.println("move action: "+parameters);
-		
+
 		Grid2D grid = (Grid2D)space;
 		IComponentDescription actor = (IComponentDescription)parameters.get(ISpaceAction.ACTOR_ID);
 		String direction = (String)parameters.get(PARAMETER_DIRECTION);
 		ISpaceObject avatar = grid.getAvatar(actor);
-
 		if(null==space.getSpaceObject(avatar.getId()))
 		{
 			throw new RuntimeException("No such object in space: "+avatar);
@@ -95,7 +94,8 @@ public class MoveAction extends SimplePropertyObject implements ISpaceAction
 		if(!skip)
 		{
 			Collection	obstacles	= grid.getSpaceObjectsByGridPosition(pos, "obstacle");
-			if(obstacles!=null && !obstacles.isEmpty())
+			Collection	trees	= grid.getSpaceObjectsByGridPosition(pos, "tree");
+			if(obstacles!=null && !obstacles.isEmpty() || trees != null && !trees.isEmpty())
 			{
 				throw new RuntimeException("Cannot move '"+direction+"' due to obstacles: "+obstacles);
 			}

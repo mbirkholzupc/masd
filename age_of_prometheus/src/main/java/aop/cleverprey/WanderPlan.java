@@ -23,7 +23,6 @@ public class WanderPlan extends Plan
 		Grid2D	env	= (Grid2D)getBeliefbase().getBelief("env").getFact();
 		String	lastdir	= null;
 		boolean	failed	= false;
-		
 		while(true)
 		{
 			// Turn 90 degrees with probability 0.25, otherwise continue moving in same direction.

@@ -18,6 +18,11 @@ import jadex.extension.envsupport.math.IVector2;
  */
 public class DumbPreyPlan extends Plan
 {
+	public int getManhattanDistance(IVector2 pos1, IVector2 pos2){
+		int xDiff = Math.abs(pos1.getX().getAsInteger() - pos2.getX().getAsInteger());
+		int yDiff = Math.abs(pos1.getY().getAsInteger() - pos2.getY().getAsInteger());
+		return xDiff + yDiff;
+	}
 	/**
 	 *  Plan body.
 	 */
@@ -26,7 +31,7 @@ public class DumbPreyPlan extends Plan
 		Grid2D	env	= (Grid2D)getBeliefbase().getBelief("env").getFact();
 		ISpaceObject	myself	= (ISpaceObject)getBeliefbase().getBelief("myself").getFact();
 		String	lastdir	= null;
-		
+		System.out.println("test1");
 		while(true)
 		{
 //			System.out.println("nearest food for: "+getAgentName()+", "+getBeliefbase().getBelief("nearest_food").getFact());
@@ -34,17 +39,19 @@ public class DumbPreyPlan extends Plan
 			// Get current position.
 			IVector2	pos	= (IVector2)myself.getProperty(Space2D.PROPERTY_POSITION);
 			
-			ISpaceObject	food	= (ISpaceObject)getBeliefbase().getBelief("nearest_food").getFact();
-			if(food!=null && pos.equals(food.getProperty(Space2D.PROPERTY_POSITION)))
+			ISpaceObject	tree	= (ISpaceObject)getBeliefbase().getBelief("nearest_tree").getFact();
+			System.out.println("test2");
+			boolean isOneStepAway = getManhattanDistance(pos, (IVector2)tree.getProperty(Space2D.PROPERTY_POSITION)) == 1;
+			if(tree!=null && isOneStepAway)
 			{
 				// Perform eat action.
 				try
 				{
 					Map<String, Object> params = new HashMap<String, Object>();
 					params.put(ISpaceAction.ACTOR_ID, getComponentDescription());
-					params.put(ISpaceAction.OBJECT_ID, food);
+					params.put(ISpaceAction.OBJECT_ID, tree);
 					Future<Void> fut = new Future<Void>();
-					env.performSpaceAction("eat", params, new DelegationResultListener<Void>(fut));
+					env.performSpaceAction("grab", params, new DelegationResultListener<Void>(fut));
 					fut.get();
 				}
 				catch(RuntimeException e)
@@ -56,17 +63,21 @@ public class DumbPreyPlan extends Plan
 			else
 			{
 				// Move towards the food, if any
-				if(food!=null)
+				if(tree!=null)
 				{
-					String	newdir	= MoveAction.getDirection(env, pos, (IVector2)food.getProperty(Space2D.PROPERTY_POSITION));
+					String	newdir	= MoveAction.getDirection(env, pos, (IVector2)tree.getProperty(Space2D.PROPERTY_POSITION));
+					if(isOneStepAway){
+						newdir = MoveAction.DIRECTION_NONE;
+					}
+
 					if(!MoveAction.DIRECTION_NONE.equals(newdir))
 					{
 						lastdir	= newdir;
 					}
 					else
 					{
-						// Food unreachable.
-						getBeliefbase().getBelief("nearest_food").setFact(null);						
+						// Tree unreachable.
+						getBeliefbase().getBelief("nearest_tree").setFact(null);
 					}
 				}
 				
