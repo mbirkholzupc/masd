@@ -343,7 +343,7 @@
 	</extensiontypes>
 
 	<componenttypes>
-		<componenttype name="DumbPrey" filename="dumbprey/DumbPrey.agent.xml"/>
+		<componenttype name="DumbPrey" filename="aop/dumbprey/DumbPrey.agent.xml"/>
 		<componenttype name="CleverPrey" filename="jadex/bdi/examples/hunterprey/cleverprey/CleverPrey.agent.xml"/>
 		<componenttype name="DumbHunter" filename="jadex/bdi/examples/hunterprey/dumbhunter/DumbHunter.agent.xml"/>
 		<componenttype name="LAHunter" filename="jadex/bdi/examples/hunterprey/ldahunter/LAHunter.agent.xml"/>
