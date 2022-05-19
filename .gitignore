@@ -35,3 +35,7 @@ jcc.settings.json
 
 # Vim files
 *.swp
+
+# IntelliJ project settings for where to find the JDK 
+# Workaround since the Linux version can't seem to find it automatically
+misc.xml
