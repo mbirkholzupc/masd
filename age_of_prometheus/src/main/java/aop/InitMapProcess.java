@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.lang.Math;
 
+import aop.extern.OpenSimplexNoise;
 import jadex.bridge.service.types.clock.IClockService;
 import jadex.commons.SUtil;
 import jadex.commons.SimplePropertyObject;
@@ -75,6 +76,9 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 
 			final Space2D grid = (Space2D)space;
 
+			OpenSimplexNoise noise = new OpenSimplexNoise();
+			double noise_threshold = 0.25;
+
 			/*
 			// Note: This snippet doesn't seem to be compatible with the view. The area increases, but the view
 			//       still shows what's in the xml file
@@ -96,6 +100,26 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 
 			int x_axis_length = grid.getAreaSize().getX().getAsInteger();
 			int y_axis_length = grid.getAreaSize().getY().getAsInteger();
+
+			for(int x=0; x<x_axis_length; x++)
+			{
+				for(int y=0; y<y_axis_length; y++)
+				{
+					props = new HashMap();
+					props.put(Space2D.PROPERTY_POSITION, new Vector2Int(x, y));
+
+					double stretch = 10;
+					double xdbl = x/stretch;
+					double ydbl = y/stretch;
+					if(noise.eval(xdbl,ydbl) > noise_threshold)
+					{
+						grid.createSpaceObject("tree", props, null);
+					}
+				}
+			}
+
+
+			/*
 			for(double i=0; i<x_axis_length; i++){
 				for(double j=0; j<y_axis_length; j++){
 					double probability_decrease = 0.2;
@@ -108,6 +132,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 					}
 				}
 			}
+			*/
             /*
 			final Space2D grid = (Space2D)space;
 //			ClassLoader cl = space.getExternalAccess().getModel().getClassLoader();
