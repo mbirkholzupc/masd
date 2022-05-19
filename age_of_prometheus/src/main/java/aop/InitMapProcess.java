@@ -76,8 +76,8 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 
 			final Space2D grid = (Space2D)space;
 
-			OpenSimplexNoise noise = new OpenSimplexNoise();
-			double noise_threshold = 0.25;
+			OpenSimplexNoise noise = new OpenSimplexNoise(2);
+			double noise_threshold = 0.4;
 
 			/*
 			// Note: This snippet doesn't seem to be compatible with the view. The area increases, but the view
@@ -132,7 +132,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 					}
 				}
 			}
-			*/
+			 */
             /*
 			final Space2D grid = (Space2D)space;
 //			ClassLoader cl = space.getExternalAccess().getModel().getClassLoader();
