@@ -34,6 +34,7 @@
  		<!-- The nearest known food. -->
  		<belief name="nearest_food" class="ISpaceObject"/>
 
+		<!-- The nearest known tree. -->
 		<belief name="nearest_tree" class="ISpaceObject"/>
 	</beliefs>
 	

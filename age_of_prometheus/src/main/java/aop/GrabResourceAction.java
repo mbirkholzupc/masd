@@ -41,7 +41,7 @@ public class GrabResourceAction extends SimplePropertyObject implements ISpaceAc
     public Object perform(Map parameters, IEnvironmentSpace space)
     {
         // System.out.println("eat action: "+parameters);
-
+        System.out.println("GRABBING...");
         Grid2D grid = (Grid2D)space;
         IComponentDescription owner = (IComponentDescription)parameters.get(ISpaceAction.ACTOR_ID);
         ISpaceObject avatar = grid.getAvatar(owner);
