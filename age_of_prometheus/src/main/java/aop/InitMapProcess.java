@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.lang.Math;
 
@@ -13,8 +14,11 @@ import jadex.bridge.service.types.clock.IClockService;
 import jadex.commons.SUtil;
 import jadex.commons.SimplePropertyObject;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
+import jadex.extension.envsupport.environment.ISpaceObject;
 import jadex.extension.envsupport.environment.ISpaceProcess;
 import jadex.extension.envsupport.environment.space2d.Space2D;
+import jadex.extension.envsupport.math.IVector1;
+import jadex.extension.envsupport.math.Vector1Double;
 import jadex.extension.envsupport.math.Vector2Double;
 import jadex.extension.envsupport.math.Vector2Int;
 
@@ -77,7 +81,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 			final Space2D grid = (Space2D)space;
 
 			OpenSimplexNoise noise = new OpenSimplexNoise(2);
-			double noise_threshold = 0.4;
+			double noise_threshold = 0.45;
 
 			/*
 			// Note: This snippet doesn't seem to be compatible with the view. The area increases, but the view
@@ -114,6 +118,27 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 					if(noise.eval(xdbl,ydbl) > noise_threshold)
 					{
 						grid.createSpaceObject("tree", props, null);
+					}
+				}
+			}
+
+			// And scatter a few random trees around too - could use Alessandro's code (below) to adjust
+			// density for certain patches.
+			for(int x=0; x<x_axis_length; x++){
+				for(int y=0; y<y_axis_length; y++){
+					double probability_threshold = 0.02;
+					double random_number = Math.random();
+					if(random_number < probability_threshold){
+						Set<ISpaceObject> any_trees = grid.getNearObjects(new Vector2Int(x,y), new Vector1Double(0));
+						if(any_trees.isEmpty()) {
+							props = new HashMap();
+							props.put(Space2D.PROPERTY_POSITION, new Vector2Int(x, y));
+							grid.createSpaceObject("tree", props, null);
+						}
+						else
+						{
+							System.out.println("Already a tree there!");
+						}
 					}
 				}
 			}
