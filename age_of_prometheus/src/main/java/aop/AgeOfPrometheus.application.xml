@@ -25,17 +25,22 @@
 		<import>aop.dumbprey.*</import>
 		<import>aop.cleverprey.*</import>
 		<import>aop.dumbhunter.*</import>
+		<import>aop.civilian.*</import>
 		<import>jadex.extension.envsupport.observer.perspective.*</import>
 		<import>jadex.bdi.planlib.*</import>
 	</imports>
 	
 	<extensiontypes>
 		<env:envspacetype name="2dspace" class="Grid2D" width="50" height="50">
+			<env:property name="border">Space2D.BORDER_STRICT</env:property>
 			<env:objecttypes>
 				<env:objecttype name="hunter">
 					<env:property name="position" event="true"/>
 				</env:objecttype>
 				<env:objecttype name="prey">
+					<env:property name="position" event="true"/>
+				</env:objecttype>
+				<env:objecttype name="civilian">
 					<env:property name="position" event="true"/>
 				</env:objecttype>
 				<env:objecttype name="obstacle" />
@@ -89,6 +94,7 @@
 				<env:avatarmapping componenttype="CleverPrey" objecttype="prey"/>
 				<env:avatarmapping componenttype="DumbHunter" objecttype="hunter"/>
 				<env:avatarmapping componenttype="LAHunter" objecttype="hunter"/>
+				<env:avatarmapping componenttype="Civilian" objecttype="civilian" createcomponent="true"/>
 			</env:avatarmappings>
 			
 			<env:percepttypes>
@@ -282,7 +288,7 @@
 						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/obstacle.png" />
 					</env:drawable>
 					<env:drawable objecttype="tree" width="1.0" height="1.0">
-						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/tree.png" />
+						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/tree_1.png" />
 					</env:drawable>
 					<env:drawable objecttype="prey" width="1.0" height="1.0">
 						<env:texturedrectangle layer="1" width="0.9" height="0.9" imagepath="aop/images/prey.png" />
@@ -300,8 +306,16 @@
 						<env:rectangle layer="-1" width="1" height="1" x="0" y="-2" color="#ff00007f" />
 						<env:rectangle layer="-1" width="1" height="1" x="0" y="2" color="#ff00007f" />
 					</env:drawable>
+					<env:drawable objecttype="civilian" width="1.0" height="1.0">
+						<env:texturedrectangle layer="2" width="0.9" height="0.9" imagepath="aop/images/normal_guy.png" />
+						<env:rectangle layer="-1" width="3" height="3" color="#ff00007f" />
+						<env:rectangle layer="-1" width="1" height="1" x="-2" y="0" color="#ff00007f" />
+						<env:rectangle layer="-1" width="1" height="1" x="2" y="0" color="#ff00007f" />
+						<env:rectangle layer="-1" width="1" height="1" x="0" y="-2" color="#ff00007f" />
+						<env:rectangle layer="-1" width="1" height="1" x="0" y="2" color="#ff00007f" />
+					</env:drawable>
 					<env:prelayers>
-						<env:tiledlayer width="0.4" height="0.4" imagepath="aop/images/background.png" />
+						<env:tiledlayer width="0.4" height="0.4" imagepath="aop/images/background_1.png" />
 					</env:prelayers>
 					<env:postlayers>
 						<env:gridlayer width="1.0" height="1.0" color="black" />
@@ -324,6 +338,9 @@
 					<env:drawable objecttype="hunter" width="1.0" height="1.0">
 						<env:regularpolygon layer="2" width="0.9" height="0.9" vertices="8" color="#3366FF" />
 					</env:drawable>
+					<env:drawable objecttype="civilian" width="1.0" height="1.0">
+						<env:regularpolygon layer="2" width="0.9" height="0.9" vertices="8" color="#3366FF" />
+					</env:drawable>
 					<env:prelayers>
 						<!-- <env:tiledlayer width="17.5" height="17.5" color="white" /> -->
 						<env:gridlayer width="1.0" height="1.0" color="white" />
@@ -344,19 +361,20 @@
 
 	<componenttypes>
 		<componenttype name="DumbPrey" filename="aop/dumbprey/DumbPrey.agent.xml"/>
-		<componenttype name="CleverPrey" filename="jadex/bdi/examples/hunterprey/cleverprey/CleverPrey.agent.xml"/>
-		<componenttype name="DumbHunter" filename="jadex/bdi/examples/hunterprey/dumbhunter/DumbHunter.agent.xml"/>
-		<componenttype name="LAHunter" filename="jadex/bdi/examples/hunterprey/ldahunter/LAHunter.agent.xml"/>
+		<componenttype name="CleverPrey" filename="aop/cleverprey/CleverPrey.agent.xml"/>
+		<componenttype name="DumbHunter" filename="aop/dumbhunter/DumbHunter.agent.xml"/>
+		<componenttype name="LAHunter" filename="aop/ldahunter/LAHunter.agent.xml"/>
+		<componenttype name="Civilian" filename="aop/civilian/Civilian.agent.xml"/>
 	</componenttypes>
 
 	<configurations>
 		<configuration name="Classic">
 			<extensions>
 				<env:envspace name="my2dspace" type="2dspace">
-                    <!--
-					<env:objects>
-						<env:object type="obstacle" number="125"/>
-					</env:objects>
+					<!--
+                    <env:objects>
+                        <env:object type="obstacle" number="125"/>
+                    </env:objects>
                     -->
 					
 					<env:processes>
@@ -377,6 +395,8 @@
 			</extensions>
  			<components>
 				<component type="DumbPrey" name="Dumbo"/>
+				<!-- <component type="Civilian" name="Villager1"/> -->
+				<component type="Civilian" name="Villager1"/>
 				<!-- <component type="DumbPrey" name="Duffy"/> -->
 
 				<!-- <component type="LAHunter" name="Wolfram"/> -->

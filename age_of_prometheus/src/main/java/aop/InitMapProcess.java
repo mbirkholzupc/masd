@@ -9,13 +9,16 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.lang.Math;
 
+import aop.civilian.CivilianPlan;
 import aop.extern.OpenSimplexNoise;
+import jadex.bdiv3x.runtime.Plan;
 import jadex.bridge.service.types.clock.IClockService;
 import jadex.commons.SUtil;
 import jadex.commons.SimplePropertyObject;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
 import jadex.extension.envsupport.environment.ISpaceObject;
 import jadex.extension.envsupport.environment.ISpaceProcess;
+import jadex.extension.envsupport.environment.space2d.Grid2D;
 import jadex.extension.envsupport.environment.space2d.Space2D;
 import jadex.extension.envsupport.math.IVector1;
 import jadex.extension.envsupport.math.Vector1Double;
@@ -78,7 +81,8 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 			String mapfile = (String)getProperty("mapfile");
             System.out.println("Parameter: " + mapfile);
 
-			final Space2D grid = (Space2D)space;
+			//final Space2D grid = (Space2D)space;
+			final Grid2D grid = (Grid2D) space;
 
 			OpenSimplexNoise noise = new OpenSimplexNoise(2);
 			double noise_threshold = 0.45;
@@ -158,6 +162,18 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 				}
 			}
 			 */
+
+			// Create some agents now
+			{
+				// Example villager. Need to set createcomponent="true" if you want to to actually be an agent.
+				// Right now, two are created. One here and one in xml.
+				props = new HashMap();
+				props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)1, (int)38));
+				grid.createSpaceObject("civilian", props, null);
+			}
+
+
+
             /*
 			final Space2D grid = (Space2D)space;
 //			ClassLoader cl = space.getExternalAccess().getModel().getClassLoader();
