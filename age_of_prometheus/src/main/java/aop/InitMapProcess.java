@@ -85,7 +85,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 			final Grid2D grid = (Grid2D) space;
 
 			OpenSimplexNoise noise = new OpenSimplexNoise(2);
-			double noise_threshold = 0.45;
+			double noise_threshold = 0.5;
 
 			/*
 			// Note: This snippet doesn't seem to be compatible with the view. The area increases, but the view
@@ -137,11 +137,30 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 						if(any_trees.isEmpty()) {
 							props = new HashMap();
 							props.put(Space2D.PROPERTY_POSITION, new Vector2Int(x, y));
+							props.put("wood", 100);
 							grid.createSpaceObject("tree", props, null);
+						}
+					}
+				}
+			}
+
+			// Wanted to try Alessandro's code below to create denser areas for apple trees, but crashed GUI
+			// because of too many objects I guess...
+			for(int x=0; x<x_axis_length; x++){
+				for(int y=0; y<y_axis_length; y++){
+					double probability_threshold = 0.02;
+					double random_number = Math.random();
+					if(random_number < probability_threshold){
+						Set<ISpaceObject> any_objects = grid.getNearObjects(new Vector2Int(x,y), new Vector1Double(0));
+						if(any_objects.isEmpty()) {
+							props = new HashMap();
+							props.put(Space2D.PROPERTY_POSITION, new Vector2Int(x, y));
+							props.put("food", 200);
+							grid.createSpaceObject("wildfood", props, null);
 						}
 						else
 						{
-							System.out.println("Already a tree there!");
+							System.out.println("Already something there!");
 						}
 					}
 				}
@@ -157,15 +176,15 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 					if(random_number < (i/x_axis_length) && random_number < (j/y_axis_length)){
 						props = new HashMap();
 						props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)i, (int)j));
-						grid.createSpaceObject("tree", props, null);
+						grid.createSpaceObject("wildfood", props, null);
 					}
 				}
 			}
-			 */
+			*/
 
 			// Create some agents now
 			{
-				// Example villager. Need to set createcomponent="true" if you want to to actually be an agent.
+				// Example villager. Need to set createcomponent="true" if you want it to create an agent.
 				// Right now, two are created. One here and one in xml.
 				props = new HashMap();
 				props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)1, (int)38));
