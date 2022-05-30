@@ -10,6 +10,9 @@ import java.util.StringTokenizer;
 import java.lang.Math;
 
 import aop.civilian.CivilianPlan;
+
+import aop.testman.*;
+
 import aop.extern.OpenSimplexNoise;
 import jadex.bdiv3x.runtime.Plan;
 import jadex.bridge.service.types.clock.IClockService;
@@ -189,6 +192,12 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 				props = new HashMap();
 				props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)1, (int)38));
 				grid.createSpaceObject("civilian", props, null);
+			}
+
+			{
+				props = new HashMap();
+				props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)1, (int)38));
+				grid.createSpaceObject("testman", props, null);
 			}
 
 
