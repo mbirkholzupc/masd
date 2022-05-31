@@ -117,7 +117,7 @@
 						<env:componenttype name="CleverPrey"/>
 					</env:componenttypes>
 				</env:percepttype>
-				<env:percepttype name="tree_grabbed" objecttype="food">
+				<env:percepttype name="tree_grabbed" objecttype="tree">
 					<env:componenttypes>
 						<env:componenttype name="DumbPrey"/>
 						<env:componenttype name="CleverPrey"/>
@@ -220,9 +220,6 @@
 					<env:property name="percepttypes">
 						new Object[]
 						{
-							new String[]{"food_seen", "set", "nearest_food", "isNearer"},
-							new String[]{"food_eaten", "unset", "nearest_food", "isFact"},
-							new String[]{"food_out_of_sight", "unset", "nearest_food", "isFact"},
 							new String[]{"tree_out_of_sight", "unset", "nearest_tree", "isFact"},
 							new String[]{"tree_seen", "set", "nearest_tree", "isNearer"},
 							new String[]{"tree_grabbed", "unset", "nearest_tree", "isFact"}
@@ -400,7 +397,7 @@
 					</env:observers>
 	 			</env:envspace>
 			</extensions>
- 			<components>
+			<components>
 				<component type="DumbPrey" name="Dumbo"/>
 				<!-- <component type="Civilian" name="Villager1"/> -->
 				<component type="Civilian" name="Villager1"/>
