@@ -32,7 +32,7 @@
 	
 	<extensiontypes>
 		<env:envspacetype name="2dspace" class="Grid2D" width="50" height="50">
-			<env:property name="border">Space2D.BORDER_STRICT</env:property>
+			<!--<env:property name="border">Space2D.BORDER_STRICT</env:property>-->
 			<env:objecttypes>
 				<env:objecttype name="hunter">
 					<env:property name="position" event="true"/>
