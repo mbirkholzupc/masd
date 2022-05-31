@@ -95,7 +95,7 @@
 				<env:avatarmapping componenttype="CleverPrey" objecttype="prey"/>
 				<env:avatarmapping componenttype="DumbHunter" objecttype="hunter"/>
 				<env:avatarmapping componenttype="LAHunter" objecttype="hunter"/>
-				<env:avatarmapping componenttype="Civilian" objecttype="civilian" createcomponent="true"/>
+				<!-- <env:avatarmapping componenttype="Civilian" objecttype="civilian" createcomponent="true"/> -->
 			</env:avatarmappings>
 			
 			<env:percepttypes>
@@ -400,7 +400,7 @@
 			<components>
 				<component type="DumbPrey" name="Dumbo"/>
 				<!-- <component type="Civilian" name="Villager1"/> -->
-				<component type="Civilian" name="Villager1"/>
+				<!-- <component type="Civilian" name="Villager1"/> -->
 				<!-- <component type="DumbPrey" name="Duffy"/> -->
 
 				<!-- <component type="LAHunter" name="Wolfram"/> -->

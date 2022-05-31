@@ -132,6 +132,14 @@ public class MoveAction extends SimplePropertyObject implements ISpaceAction
 		return null;
 	}
 
+
+	public static int getManhattanDistance(IVector2 pos1, IVector2 pos2){
+		int xDiff = Math.abs(pos1.getX().getAsInteger() - pos2.getX().getAsInteger());
+		int yDiff = Math.abs(pos1.getY().getAsInteger() - pos2.getY().getAsInteger());
+		return xDiff + yDiff;
+	}
+
+
 	/**
 	 *  Get the best way to go towards a direction.
 	 *  @param space	The 2D space to move in.
@@ -140,7 +148,7 @@ public class MoveAction extends SimplePropertyObject implements ISpaceAction
 	 * 	@return The way to go (if any).
 	 */
 	// Todo: A*
-	public static String	getDirection(final Grid2D space, IVector2 sourcepos, final IVector2 targetpos)
+	public static String getDirection(final Grid2D space, IVector2 sourcepos, final IVector2 targetpos)
 	{
 		String	ret	= evaluateMoves(space, sourcepos, new IMoveEvaluator()
 		{
