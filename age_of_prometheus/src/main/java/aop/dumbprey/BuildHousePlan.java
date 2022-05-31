@@ -64,7 +64,8 @@ public class BuildHousePlan extends Plan {
         while(true)
         {
             IVector2 agentCurrentPos = (IVector2)myself.getProperty(Space2D.PROPERTY_POSITION);
-            if(!agentCurrentPos.equals(emptyGridPosition)){
+
+            if(MoveAction.getManhattanDistance(agentCurrentPos, emptyGridPosition) != 1){
                 String newdir = getDirectionAccordingToOnlineAStar(agentCurrentPos, emptyGridPosition, onlineAStarGrid);
                 onlineAStarGrid[agentCurrentPos.getXAsInteger()][agentCurrentPos.getYAsInteger()] += 1;
                 // Perform move action.
@@ -82,7 +83,10 @@ public class BuildHousePlan extends Plan {
                     System.out.println("Move failed: "+e);
                 }
             } else {
-                // spawn house
+                // Spawn house
+                Map houseProps = new HashMap();
+                houseProps.put(Space2D.PROPERTY_POSITION, emptyGridPosition);
+                env.createSpaceObject("house", houseProps, null);
             }
         }
     }
