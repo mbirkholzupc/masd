@@ -75,22 +75,9 @@ public class GrabResourceAction extends SimplePropertyObject implements ISpaceAc
             // System.err.println("Destroying: "+target.getProperty(ISpaceObject.PROPERTY_OWNER));
             space.getExternalAccess().getExternalAccess(((IComponentDescription)target.getProperty(ISpaceObject.PROPERTY_OWNER)).getName()).killComponent();
         }
-        for (Object spaceObject:
-             grid.getSpaceObjectsCollection()) {
-            SpaceObject spaceObjectCasted = (SpaceObject)spaceObject;
 
-            if(spaceObjectCasted.getType() == "prey"){
-                spaceObjectCasted.setProperty(PROPERTY_WOOD, wood);
-            }
-        }
-        for (Object spaceObject:
-                grid.getSpaceObjectsCollection()) {
-            SpaceObject spaceObjectCasted = (SpaceObject)spaceObject;
-
-            if(spaceObjectCasted.getType() == "prey"){
-                System.out.println(spaceObjectCasted.getProperty(PROPERTY_WOOD));
-            }
-        }
+        ResourceManager rm = ResourceManager.getInstance();
+        rm.addResource(1, ResourceManager.WOOD, 1);
         // System.out.println("Object eaten: "+target);
 
         return null;
