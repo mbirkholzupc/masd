@@ -86,6 +86,12 @@ public class ResourceManager
     public void addResource(int which_team, int which_one, int how_much) {
         if ((which_team >= 0) && (which_team < N_TEAMS)) {
             stashes[which_team].addResource(which_one, how_much);
+
+            String resources = "Resources: ";
+            for (int i = 0; i < N_RESOURCES; i++) {
+                resources += stashes[which_team].readResource(i) + " ";
+            }
+            System.out.println(resources);
         }
     }
 
