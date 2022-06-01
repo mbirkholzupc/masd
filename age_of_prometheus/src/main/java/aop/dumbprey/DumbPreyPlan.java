@@ -50,7 +50,7 @@ public class DumbPreyPlan extends Plan
 				{
 					Map<String, Object> params = new HashMap<String, Object>();
 					params.put(ISpaceAction.ACTOR_ID, getComponentDescription());
-					System.out.println("tree " + tree);
+					System.out.println("tree.getType() " + tree.getType());
 					params.put(ISpaceAction.OBJECT_ID, tree);
 					Future<Void> fut = new Future<Void>();
 					env.performSpaceAction("grab", params, new DelegationResultListener<Void>(fut));

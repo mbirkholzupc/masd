@@ -39,6 +39,9 @@
 	</beliefs>
 	
 	<plans>
+		<plan name="build_house">
+			<body impl="BuildHousePlan"/>
+		</plan>
 		<plan name="dumbprey_plan">
 			<body class="DumbPreyPlan"/>
 		</plan>
@@ -55,7 +58,8 @@
 	<configurations>
 		<configuration name="default">
 			<plans>
-				<initialplan ref="dumbprey_plan"/>
+				<!--<initialplan ref="dumbprey_plan"/>-->
+				<initialplan ref="build_house"/>
 			</plans>
 		</configuration>
 	</configurations>

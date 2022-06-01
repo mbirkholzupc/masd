@@ -45,6 +45,7 @@
 				</env:objecttype>
 				<env:objecttype name="obstacle" />
 				<env:objecttype name="tree" />
+				<env:objecttype name="house" />
 				<env:objecttype name="wildfood" />
 				<env:objecttype name="food" >
 				    <env:property name="clock" />
@@ -95,7 +96,7 @@
 				<env:avatarmapping componenttype="CleverPrey" objecttype="prey"/>
 				<env:avatarmapping componenttype="DumbHunter" objecttype="hunter"/>
 				<env:avatarmapping componenttype="LAHunter" objecttype="hunter"/>
-				<env:avatarmapping componenttype="Civilian" objecttype="civilian" createcomponent="true"/>
+				<!-- <env:avatarmapping componenttype="Civilian" objecttype="civilian" createcomponent="true"/> -->
 			</env:avatarmappings>
 			
 			<env:percepttypes>
@@ -288,6 +289,9 @@
 					<env:drawable objecttype="tree" width="1.0" height="1.0">
 						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/tree_1.png" />
 					</env:drawable>
+					<env:drawable objecttype="house" width="1.0" height="1.0">
+						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/house_1.png" />
+					</env:drawable>
 					<env:drawable objecttype="wildfood" width="1.0" height="1.0">
 						<env:texturedrectangle layer="0" width="0.9" height="0.9" imagepath="aop/images/apple.png" />
 					</env:drawable>
@@ -332,6 +336,9 @@
 					</env:drawable>
 					<env:drawable objecttype="tree" width="1.0" height="1.0">
 						<env:triangle layer="0" width="0.9" height="0.9" rotatez="3.14159" color="#996600" />
+					</env:drawable>
+					<env:drawable objecttype="house" width="1.0" height="1.0">
+						<env:triangle layer="0" width="0.9" height="0.9" rotatez="3.14159" color="#555555" />
 					</env:drawable>
 					<env:drawable objecttype="wildfood" width="1.0" height="1.0">
 						<env:triangle layer="0" width="0.9" height="0.9" rotatez="3.14159" color="#996600" />
@@ -400,7 +407,7 @@
 			<components>
 				<component type="DumbPrey" name="Dumbo"/>
 				<!-- <component type="Civilian" name="Villager1"/> -->
-				<component type="Civilian" name="Villager1"/>
+				<!-- <component type="Civilian" name="Villager1"/> -->
 				<!-- <component type="DumbPrey" name="Duffy"/> -->
 
 				<!-- <component type="LAHunter" name="Wolfram"/> -->
