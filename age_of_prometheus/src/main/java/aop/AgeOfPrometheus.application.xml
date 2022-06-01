@@ -26,6 +26,8 @@
 		<import>aop.cleverprey.*</import>
 		<import>aop.dumbhunter.*</import>
 		<import>aop.civilian.*</import>
+		<import>aop.constructionczar.*</import>
+		<import>aop.economicczar.*</import>
 		<import>jadex.extension.envsupport.observer.perspective.*</import>
 		<import>jadex.bdi.planlib.*</import>
 	</imports>
@@ -41,6 +43,12 @@
 					<env:property name="position" event="true"/>
 				</env:objecttype>
 				<env:objecttype name="civilian">
+					<env:property name="position" event="true"/>
+				</env:objecttype>
+				<env:objecttype name="constructionczar">
+					<env:property name="position" event="true"/>
+				</env:objecttype>
+				<env:objecttype name="economicczar">
 					<env:property name="position" event="true"/>
 				</env:objecttype>
 				<env:objecttype name="obstacle" />
@@ -96,7 +104,9 @@
 				<env:avatarmapping componenttype="CleverPrey" objecttype="prey"/>
 				<env:avatarmapping componenttype="DumbHunter" objecttype="hunter"/>
 				<env:avatarmapping componenttype="LAHunter" objecttype="hunter"/>
-				<!-- <env:avatarmapping componenttype="Civilian" objecttype="civilian" createcomponent="true"/> -->
+				<env:avatarmapping componenttype="Civilian" objecttype="civilian" createcomponent="true"/>
+				<env:avatarmapping componenttype="ConstructionCzar" objecttype="constructionczar" createcomponent="true"/>
+				<env:avatarmapping componenttype="EconomicCzar" objecttype="economicczar" createcomponent="true"/>
 			</env:avatarmappings>
 			
 			<env:percepttypes>
@@ -376,6 +386,8 @@
 		<componenttype name="DumbHunter" filename="aop/dumbhunter/DumbHunter.agent.xml"/>
 		<componenttype name="LAHunter" filename="aop/ldahunter/LAHunter.agent.xml"/>
 		<componenttype name="Civilian" filename="aop/civilian/Civilian.agent.xml"/>
+		<componenttype name="ConstructionCzar" filename="aop/constructionczar/ConstructionCzar.agent.xml"/>
+		<componenttype name="EconomicCzar" filename="aop/economicczar/EconomicCzar.agent.xml"/>
 	</componenttypes>
 
 	<configurations>

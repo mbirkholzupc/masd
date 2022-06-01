@@ -19,7 +19,8 @@ public class ResourceManager
     public static final int FOOD=0;
     public static final int WOOD=1;
     public static final int ORE=2;
-    public static final int N_RESOURCES=3;
+    public static final int HOUSING=3;
+    public static final int N_RESOURCES=4;
     // Inner class to hold resource shares for each "team"
     public class ResourceStash
     {

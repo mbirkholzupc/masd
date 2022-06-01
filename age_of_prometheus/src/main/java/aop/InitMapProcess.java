@@ -191,6 +191,14 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 				grid.createSpaceObject("civilian", props, null);
 			}
 
+			// Czars - create in position 1, 1 but they aren't actually displayed
+			{
+				props = new HashMap();
+				props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)1, (int)1));
+				grid.createSpaceObject("constructionczar", props, null);
+				grid.createSpaceObject("economicczar", props, null);
+			}
+
 
 
             /*
