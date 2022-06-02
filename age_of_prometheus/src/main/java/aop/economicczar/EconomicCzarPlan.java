@@ -3,8 +3,10 @@ package aop.economicczar;
 import java.util.HashMap;
 import java.util.Map;
 
+import aop.ConstructionPolicy;
 import aop.EconomicPolicy;
 import aop.MoveAction;
+import aop.ResourceManager;
 import jadex.bdiv3x.runtime.Plan;
 import jadex.commons.future.DelegationResultListener;
 import jadex.commons.future.Future;
@@ -34,17 +36,28 @@ public class EconomicCzarPlan extends Plan
         Grid2D	env	= (Grid2D)getBeliefbase().getBelief("env").getFact();
         ISpaceObject	myself	= (ISpaceObject)getBeliefbase().getBelief("myself").getFact();
 
-        System.out.println("Economic Czar plan running...");
 		while(true) {
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 			} catch (Exception e) {
 			}
 
-			cur_resource=(cur_resource==0)?1:0;
-			EconomicPolicy.getInstance().setNeededResource(0,cur_resource);
-			System.out.println("Changed needed resource to: " + EconomicPolicy.getInstance().readNeededResource(0));
+			// Check if other czars have resource requests
+			int construction_czar_request = ConstructionPolicy.getInstance().getResourceNeed(1);
 
+			EconomicPolicy ep = EconomicPolicy.getInstance();
+			ResourceManager rm = ResourceManager.getInstance();
+			if(construction_czar_request!=ResourceManager.NONE) {
+				ep.setNeededResource(0,construction_czar_request);
+			}
+			else {
+				// If nothing special requested, set to resource we have the least of
+				int food_level = rm.readResource(1,ResourceManager.FOOD);
+				int wood_level = rm.readResource(1,ResourceManager.WOOD);
+
+				if( food_level < wood_level ) ep.setNeededResource(1, ResourceManager.FOOD);
+				if( wood_level < food_level ) ep.setNeededResource(1, ResourceManager.WOOD);
+			}
 		}
     }
 }

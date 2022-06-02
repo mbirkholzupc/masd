@@ -78,7 +78,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 		{
             System.out.println("Doing init process...");
 			String mapfile = (String)getProperty("mapfile");
-            System.out.println("Parameter: " + mapfile);
+            //System.out.println("Parameter: " + mapfile);
 
 			//final Space2D grid = (Space2D)space;
 			final Grid2D grid = (Grid2D) space;
@@ -147,7 +147,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 			// because of too many objects I guess...
 			for(int x=0; x<x_axis_length; x++){
 				for(int y=0; y<y_axis_length; y++){
-					double probability_threshold = 0.04;
+					double probability_threshold = 0.10;
 					double random_number = Math.random();
 					if(random_number < probability_threshold){
 						Set<ISpaceObject> any_objects = grid.getNearObjects(new Vector2Int(x,y), new Vector1Double(0));
@@ -159,7 +159,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 						}
 						else
 						{
-							System.out.println("Already something there!");
+							//System.out.println("Already something there!");
 						}
 					}
 				}

@@ -40,7 +40,6 @@ public class CreateNewCivilianPlan extends Plan
         if( ResourceManager.getInstance().requestResource(1, ResourceManager.FOOD, 2) )
 		{
 			// If we're here, we can build a house
-			System.out.println("Can create civilian");
 			IVector2 createloc = getCreateCivilianLoc(env);
 
 			Map props = new HashMap();

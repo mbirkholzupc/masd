@@ -33,7 +33,6 @@ public class ConstructionCzarPlan extends Plan
 	{
         Grid2D	env	= (Grid2D)getBeliefbase().getBelief("env").getFact();
         ISpaceObject	myself	= (ISpaceObject)getBeliefbase().getBelief("myself").getFact();
-        System.out.println("Construction Czar plan running...");
 
 		while(true) {
 			try {
@@ -49,7 +48,6 @@ public class ConstructionCzarPlan extends Plan
 			{
 				IGoal house_goal = createGoal("command_house_construction_goal");
 				dispatchSubgoalAndWait(house_goal);
-				System.out.println("Done waiting.");
 			}
 			else
 			{
