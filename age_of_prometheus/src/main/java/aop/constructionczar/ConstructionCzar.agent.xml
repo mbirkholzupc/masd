@@ -16,6 +16,8 @@
 		<import>jadex.extension.envsupport.environment.space2d.*</import>
 		<import>jadex.extension.envsupport.environment.*</import>
 		<import>jadex.extension.envsupport.math.*</import>
+		<import>jadex.bridge.IComponentIdentifier</import>
+		<import>aop.constructionczar.BuildHouseHerePlan</import>
 	</imports>
 
 	<beliefs>
@@ -28,13 +30,39 @@
  		<belief name="myself" class="ISpaceObject">
  			<fact>$beliefbase.env.getAvatar($scope.getComponentDescription(), $scope.getAgentModel().getFullName())</fact>
  		</belief>
+
+		<belief name="mycid" class="IComponentIdentifier">
+			<fact>$scope.getComponentIdentifier()</fact>
+		</belief>
+
+		<!-- Update whether housing is needed every 5 seconds doesn't work so we'll check it in a plan-->
+		<belief name="need_more_houses" class="boolean">
+			<fact>false</fact>
+		</belief>
 	</beliefs>
 	
 	<plans>
 		<plan name="constructionczar_plan">
 			<body class="ConstructionCzarPlan"/>
 		</plan>
+		<plan name="buildhousehere_plan">
+			<body class="BuildHouseHerePlan"/>
+			<trigger>
+				<goal ref="maintain_housing_limit" />
+			</trigger>
+		</plan>
 	</plans>
+
+	<goals>
+		<maintaingoal name="maintain_housing_limit" retrydelay="10000" exclude="never">
+			<maintaincondition language="jcl">
+				$beliefbase.need_more_houses==false
+			</maintaincondition>
+			<targetcondition language="jcl">
+				$beliefbase.need_more_houses==false
+			</targetcondition>
+		</maintaingoal>
+	</goals>
 
 	<properties>
 		<!-- The environment may throw exceptions when executing property listeners
@@ -49,6 +77,9 @@
 			<plans>
 				<initialplan ref="constructionczar_plan"/>
 			</plans>
+			<goals>
+				<initialgoal ref="maintain_housing_limit"/>
+			</goals>
 		</configuration>
 	</configurations>
 

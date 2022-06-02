@@ -77,7 +77,7 @@ public class GrabResourceAction extends SimplePropertyObject implements ISpaceAc
         }
 
         ResourceManager rm = ResourceManager.getInstance();
-        rm.addResource(1, ResourceManager.WOOD, 1);
+        rm.addResource(0, ResourceManager.WOOD, 1);
         // System.out.println("Object eaten: "+target);
 
         return null;

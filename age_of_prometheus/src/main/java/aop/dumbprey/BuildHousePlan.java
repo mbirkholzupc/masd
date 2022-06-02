@@ -1,6 +1,7 @@
 package aop.dumbprey;
 
 import aop.MoveAction;
+import aop.ResourceManager;
 import jadex.bdiv3x.runtime.Plan;
 import jadex.commons.future.DelegationResultListener;
 import jadex.commons.future.Future;
@@ -87,6 +88,7 @@ public class BuildHousePlan extends Plan {
                 Map houseProps = new HashMap();
                 houseProps.put(Space2D.PROPERTY_POSITION, emptyGridPosition);
                 env.createSpaceObject("house", houseProps, null);
+                ResourceManager.getInstance().addHouse(0);
             }
         }
     }

@@ -20,7 +20,8 @@ public class ResourceManager
     public static final int WOOD=1;
     public static final int ORE=2;
     public static final int HOUSING=3;
-    public static final int N_RESOURCES=4;
+    public static final int POPULATION=4;
+    public static final int N_RESOURCES=5;
     // Inner class to hold resource shares for each "team"
     public class ResourceStash
     {
@@ -95,11 +96,25 @@ public class ResourceManager
         }
     }
 
+    public void addHouse(int which_team) {
+        if ((which_team >= 0) && (which_team < N_TEAMS)) {
+            // Let's say a house can hold 5 people
+            stashes[which_team].addResource(ResourceManager.HOUSING, 5);
+        }
+    }
+
     public boolean requestResource(int which_team, int which_one, int how_much) {
         boolean request_ok = false;
         if ((which_team >= 0) && (which_team < N_TEAMS)) {
             request_ok = stashes[which_team].requestResource(which_one, how_much);
         }
         return request_ok;
+    }
+    public boolean housingFull(int which_team) {
+        boolean rv=false;
+        if ((which_team >= 0) && (which_team < N_TEAMS)) {
+            rv = stashes[which_team].readResource(HOUSING) <= stashes[which_team].readResource(POPULATION);
+        }
+        return rv;
     }
 }

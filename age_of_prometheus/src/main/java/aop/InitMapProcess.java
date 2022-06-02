@@ -189,6 +189,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 				props = new HashMap();
 				props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)1, (int)38));
 				grid.createSpaceObject("civilian", props, null);
+				ResourceManager.getInstance().addResource(0,ResourceManager.POPULATION, 1); // Count 1 person
 			}
 
 			// Czars - create in position 1, 1 but they aren't actually displayed

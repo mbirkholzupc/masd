@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import aop.MoveAction;
+import aop.ResourceManager;
 import jadex.bdiv3x.runtime.Plan;
+import jadex.bridge.IComponentIdentifier;
 import jadex.commons.future.DelegationResultListener;
 import jadex.commons.future.Future;
 import jadex.extension.envsupport.environment.ISpaceAction;
@@ -30,7 +32,24 @@ public class ConstructionCzarPlan extends Plan
 	{
         Grid2D	env	= (Grid2D)getBeliefbase().getBelief("env").getFact();
         ISpaceObject	myself	= (ISpaceObject)getBeliefbase().getBelief("myself").getFact();
+		IComponentIdentifier mycid = (IComponentIdentifier)getBeliefbase().getBelief("mycid").getFact();
 
         System.out.println("Construction Czar plan running...");
-    }
+		System.out.println(mycid.getName());
+		while(true) {
+			try {
+				Thread.sleep(10000);
+			} catch (Exception e) {
+			}
+			// Update housing full belief
+			getBeliefbase().getBelief("need_more_houses").setFact(ResourceManager.getInstance().housingFull(0));
+
+			boolean need_more_houses = (boolean)getBeliefbase().getBelief("need_more_houses").getFact();
+			System.out.println("Need more houses: " + need_more_houses);
+
+			// Try to find an agent that can build a house
+
+		}
+
+	}
 }

@@ -59,7 +59,8 @@
 		<configuration name="default">
 			<plans>
 				<!--<initialplan ref="dumbprey_plan"/>-->
-				<initialplan ref="build_house"/>
+				<initialplan ref="dumbprey_plan"/>
+				<!--<initialplan ref="build_house"/>-->
 			</plans>
 		</configuration>
 	</configurations>
