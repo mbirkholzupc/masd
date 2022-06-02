@@ -91,7 +91,7 @@ public class BuildHousePlan extends Plan {
         houseProps.put(Space2D.PROPERTY_POSITION, emptyGridPosition);
         env.createSpaceObject("house", houseProps, null);
         ResourceManager rm = ResourceManager.getInstance();
-        rm.addResource(1, ResourceManager.HOUSING, 1);
+        rm.addHouse(1);
         // Create new top-level goal.
         // IGoal grab_trees_goal = createGoal("grab_trees");
         // ispatchTopLevelGoal(grab_trees_goal);
