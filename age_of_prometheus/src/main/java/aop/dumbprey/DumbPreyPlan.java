@@ -38,7 +38,7 @@ public class DumbPreyPlan extends Plan
 		while(true)
 		{
 			int needed_resourse = ep.readNeededResource(0);
-			String belife_to_check = needed_resourse == ResourceManager.FOOD ? "nearest_wild_food" : "nearest_tree";
+			String beliefe_to_check = needed_resourse == ResourceManager.FOOD ? "nearest_wild_food" : "nearest_tree";
 			if(false/*build house message received*/){
 				IGoal build_house_goal = createGoal("build_house_goal");
 				dispatchSubgoalAndWait(build_house_goal);
@@ -48,7 +48,7 @@ public class DumbPreyPlan extends Plan
 			// Get current position.
 			IVector2	pos	= (IVector2)myself.getProperty(Space2D.PROPERTY_POSITION);
 
-			ISpaceObject	tree	= (ISpaceObject)getBeliefbase().getBelief(belife_to_check).getFact();
+			ISpaceObject	tree	= (ISpaceObject)getBeliefbase().getBelief(beliefe_to_check).getFact();
 			boolean isOneStepAway = false;
 			if(tree!=null){
 				isOneStepAway = getManhattanDistance(pos, (IVector2)tree.getProperty(Space2D.PROPERTY_POSITION)) == 1;
@@ -88,7 +88,7 @@ public class DumbPreyPlan extends Plan
 					else
 					{
 						// Tree unreachable.
-						getBeliefbase().getBelief("belife_to_check").setFact(null);
+						getBeliefbase().getBelief(beliefe_to_check).setFact(null);
 					}
 				}
 
@@ -118,7 +118,7 @@ public class DumbPreyPlan extends Plan
 				catch(RuntimeException e)
 				{
 					// Move failed, forget about food and turn 90 degrees.
-					getBeliefbase().getBelief(belife_to_check).setFact(null);
+					getBeliefbase().getBelief(beliefe_to_check).setFact(null);
 
 					if(MoveAction.DIRECTION_LEFT.equals(lastdir) || MoveAction.DIRECTION_RIGHT.equals(lastdir))
 					{
