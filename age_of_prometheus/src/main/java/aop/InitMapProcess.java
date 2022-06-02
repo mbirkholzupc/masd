@@ -147,7 +147,7 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 			// because of too many objects I guess...
 			for(int x=0; x<x_axis_length; x++){
 				for(int y=0; y<y_axis_length; y++){
-					double probability_threshold = 0.10;
+					double probability_threshold = 0.07;
 					double random_number = Math.random();
 					if(random_number < probability_threshold){
 						Set<ISpaceObject> any_objects = grid.getNearObjects(new Vector2Int(x,y), new Vector1Double(0));
