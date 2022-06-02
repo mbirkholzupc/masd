@@ -16,6 +16,7 @@ public class ResourceManager
     public static final int N_TEAMS = 6;  // Just a max value. Can be any number up to this.
 
     // Resource type constants
+    public static final int NONE=-1;
     public static final int FOOD=0;
     public static final int WOOD=1;
     public static final int ORE=2;

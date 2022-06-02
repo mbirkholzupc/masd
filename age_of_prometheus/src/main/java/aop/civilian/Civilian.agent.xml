@@ -36,6 +36,17 @@
 
 		<!-- The nearest known tree. -->
 		<belief name="nearest_tree" class="ISpaceObject"/>
+
+		<!-- Where to construct a house -->
+		<belief name="needtobuildhouse" class="boolean">
+			<fact>false</fact>
+		</belief>
+		<belief name="housex" class="int">
+			<fact>10</fact>
+		</belief>
+		<belief name="housey" class="int">
+			<fact>10</fact>
+		</belief>
 	</beliefs>
 
 	<goals>

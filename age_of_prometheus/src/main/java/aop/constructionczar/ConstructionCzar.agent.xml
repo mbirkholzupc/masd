@@ -28,11 +28,25 @@
  		<belief name="myself" class="ISpaceObject">
  			<fact>$beliefbase.env.getAvatar($scope.getComponentDescription(), $scope.getAgentModel().getFullName())</fact>
  		</belief>
+
+		<belief name="need_more_houses" class="boolean">
+			<fact>false</fact>
+		</belief>
 	</beliefs>
+	<goals>
+		<achievegoal name="command_house_construction_goal">
+		</achievegoal>
+	</goals>
 	
 	<plans>
 		<plan name="constructionczar_plan">
 			<body class="ConstructionCzarPlan"/>
+		</plan>
+		<plan name="commandhouseconstruction_plan">
+			<body impl="CommandHouseConstructionPlan"/>
+			<trigger>
+				<goal ref="command_house_construction_goal" />
+			</trigger>
 		</plan>
 	</plans>
 

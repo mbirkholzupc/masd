@@ -1,5 +1,6 @@
 package aop.civilian;
 
+import aop.ConstructionPolicy;
 import aop.MoveAction;
 import aop.ResourceManager;
 import jadex.bdiv3x.runtime.Plan;
@@ -22,79 +23,84 @@ public class BuildHousePlan extends Plan {
         // Get current position.
         IVector2 agentInitialPos = (IVector2)myself.getProperty(Space2D.PROPERTY_POSITION);
 
-        // create a set containing all the coordinates of the grid that contains a tree
-        IVector2 emptyGridPosition = env.getEmptyGridPosition();
-        Set<String> treePositions = new HashSet<String>();
-        Object[] iSpaceObjects = env.getSpaceObjects();
-        for(int i=0; i<iSpaceObjects.length; i++){
-            ISpaceObject iSpaceObject = (ISpaceObject)iSpaceObjects[i];
-            if(Objects.equals(iSpaceObject.getType(), "tree")){
-                IVector2 obstaclePosition = (IVector2)iSpaceObject.getProperty(Space2D.PROPERTY_POSITION);
-                int xInt = obstaclePosition.getXAsInteger();
-                int yInt = obstaclePosition.getYAsInteger();
-                String stringifiedPosition = xInt + ";" + yInt;
-                treePositions.add(stringifiedPosition);
-            }
-        }
-
-        // Fill matrix of costs for A* algorithm
-        int gridSize = env.getAreaSize().getLength().getAsInteger();
-        int[][] onlineAStarGrid = new int[gridSize][gridSize];
-        for (int i=0; i<gridSize; i++){
-            for (int j=0; j<gridSize; j++){
-                String stringifiedPosition = i+";"+j;
-                boolean isEmpty = !treePositions.contains(stringifiedPosition);
-                if(isEmpty){
-                    IVector2 gridPos = new Vector2Int(i, j);
-                    onlineAStarGrid[i][j] = MoveAction.getManhattanDistance(gridPos, emptyGridPosition);
-                } else {
-                    // huge number so it never wants to wolk through obstacles
-                    onlineAStarGrid[i][j] = 9999999;
-                }
-            }
-        }
-        /* Print onlineAStarGrid
-        System.out.println("onlineAStarGrid");
-        for (int i=0; i<gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
-                System.out.print(onlineAStarGrid[i][j] + " ");
-            }
-            System.out.println();
-        }*/
-
-        while(true)
+        // Need to create house where Construction Czar says, not in a random empty grid position
+        //IVector2 emptyGridPosition = env.getEmptyGridPosition();
+        if((boolean)getBeliefbase().getBelief("needtobuildhouse").getFact())
         {
-            IVector2 agentCurrentPos = (IVector2)myself.getProperty(Space2D.PROPERTY_POSITION);
+            int housex = (int)getBeliefbase().getBelief("housex").getFact();
+            int housey = (int)getBeliefbase().getBelief("housey").getFact();
+            IVector2 houseDestination = new Vector2Int(housex, housey);
 
-            if(MoveAction.getManhattanDistance(agentCurrentPos, emptyGridPosition) != 1){
-                String newdir = getDirectionAccordingToOnlineAStar(agentCurrentPos, emptyGridPosition, onlineAStarGrid);
-                onlineAStarGrid[agentCurrentPos.getXAsInteger()][agentCurrentPos.getYAsInteger()] += 1;
-                // Perform move action.
-                try
-                {
-                    Map<String, Object> params = new HashMap<String, Object>();
-                    params.put(ISpaceAction.ACTOR_ID, getComponentDescription());
-                    params.put(MoveAction.PARAMETER_DIRECTION, newdir);
-                    Future<Void> fut = new Future<Void>();
-                    env.performSpaceAction("move", params, new DelegationResultListener<Void>(fut));
-                    fut.get();
+            // create a set containing all the coordinates of the grid that contains a tree
+            Set<String> treePositions = new HashSet<String>();
+            Object[] iSpaceObjects = env.getSpaceObjects();
+            for (int i = 0; i < iSpaceObjects.length; i++) {
+                ISpaceObject iSpaceObject = (ISpaceObject) iSpaceObjects[i];
+                if (Objects.equals(iSpaceObject.getType(), "tree")) {
+                    IVector2 obstaclePosition = (IVector2) iSpaceObject.getProperty(Space2D.PROPERTY_POSITION);
+                    int xInt = obstaclePosition.getXAsInteger();
+                    int yInt = obstaclePosition.getYAsInteger();
+                    String stringifiedPosition = xInt + ";" + yInt;
+                    treePositions.add(stringifiedPosition);
                 }
-                catch(RuntimeException e)
-                {
-                }
-            } else {
-                break;
             }
+
+            // Fill matrix of costs for A* algorithm
+            int gridSize = env.getAreaSize().getLength().getAsInteger();
+            int[][] onlineAStarGrid = new int[gridSize][gridSize];
+            for (int i = 0; i < gridSize; i++) {
+                for (int j = 0; j < gridSize; j++) {
+                    String stringifiedPosition = i + ";" + j;
+                    boolean isEmpty = !treePositions.contains(stringifiedPosition);
+                    if (isEmpty) {
+                        IVector2 gridPos = new Vector2Int(i, j);
+                        onlineAStarGrid[i][j] = MoveAction.getManhattanDistance(gridPos, houseDestination);
+                    } else {
+                        // huge number so it never wants to wolk through obstacles
+                        onlineAStarGrid[i][j] = 9999999;
+                    }
+                }
+            }
+            /* Print onlineAStarGrid
+            System.out.println("onlineAStarGrid");
+            for (int i=0; i<gridSize; i++) {
+                for (int j = 0; j < gridSize; j++) {
+                    System.out.print(onlineAStarGrid[i][j] + " ");
+                }
+                System.out.println();
+            }*/
+
+            while (true) {
+                IVector2 agentCurrentPos = (IVector2) myself.getProperty(Space2D.PROPERTY_POSITION);
+
+                if (MoveAction.getManhattanDistance(agentCurrentPos, houseDestination) != 1) {
+                    String newdir = getDirectionAccordingToOnlineAStar(agentCurrentPos, houseDestination, onlineAStarGrid);
+                    onlineAStarGrid[agentCurrentPos.getXAsInteger()][agentCurrentPos.getYAsInteger()] += 1;
+                    // Perform move action.
+                    try {
+                        Map<String, Object> params = new HashMap<String, Object>();
+                        params.put(ISpaceAction.ACTOR_ID, getComponentDescription());
+                        params.put(MoveAction.PARAMETER_DIRECTION, newdir);
+                        Future<Void> fut = new Future<Void>();
+                        env.performSpaceAction("move", params, new DelegationResultListener<Void>(fut));
+                        fut.get();
+                    } catch (RuntimeException e) {
+                    }
+                } else {
+                    break;
+                }
+            }
+            // Spawn house
+            Map houseProps = new HashMap();
+            houseProps.put(Space2D.PROPERTY_POSITION, houseDestination);
+            ConstructionPolicy.getInstance().buildingComplete(1);
+            env.createSpaceObject("house", houseProps, null);
+            ResourceManager rm = ResourceManager.getInstance();
+            rm.addHouse(1);
+            // Create new top-level goal.
+            // IGoal grab_trees_goal = createGoal("grab_trees");
+            // ispatchTopLevelGoal(grab_trees_goal);
         }
-        // Spawn house
-        Map houseProps = new HashMap();
-        houseProps.put(Space2D.PROPERTY_POSITION, emptyGridPosition);
-        env.createSpaceObject("house", houseProps, null);
-        ResourceManager rm = ResourceManager.getInstance();
-        rm.addHouse(1);
-        // Create new top-level goal.
-        // IGoal grab_trees_goal = createGoal("grab_trees");
-        // ispatchTopLevelGoal(grab_trees_goal);
     }
 
     private String getDirectionAccordingToOnlineAStar(IVector2 agentPos, IVector2 emptyGridPosition, int[][] onlineAStarGrid){

@@ -3,6 +3,7 @@ package aop.civilian;
 import java.util.HashMap;
 import java.util.Map;
 
+import aop.ConstructionPolicy;
 import aop.EconomicPolicy;
 import aop.MoveAction;
 import aop.ResourceManager;
@@ -39,7 +40,12 @@ public class CollectResourcesPlan extends Plan
 		{
 			int needed_resourse = ep.readNeededResource(0);
 			String beliefe_to_check = needed_resourse == ResourceManager.FOOD ? "nearest_wild_food" : "nearest_tree";
-			if(false/*build house message received*/){
+			//if(false/*build house message received*/){
+			ConstructionPolicy.ConstructionRequest cr = ConstructionPolicy.getInstance().getRequest(1);
+			if(null != cr) {
+				getBeliefbase().getBelief("needtobuildhouse").setFact(true);
+				getBeliefbase().getBelief("housex").setFact(cr.x);
+				getBeliefbase().getBelief("housey").setFact(cr.y);
 				IGoal build_house_goal = createGoal("build_house_goal");
 				dispatchSubgoalAndWait(build_house_goal);
 			}
