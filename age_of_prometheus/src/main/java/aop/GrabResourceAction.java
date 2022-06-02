@@ -57,9 +57,13 @@ public class GrabResourceAction extends SimplePropertyObject implements ISpaceAc
         }
 
         Integer wood = (Integer)avatar.getProperty(PROPERTY_WOOD);
+        boolean resource_food = false;
+        boolean resource_wood = false;
         if(avatar.getType().equals("prey") && (target.getType().equals("tree") || target.getType().equals("wildfood")))
         {
             wood = wood != null ? Integer.valueOf(wood.intValue() + 1) : Integer.valueOf(1);
+            resource_wood = target.getType().equals("tree");
+            resource_food = target.getType().equals("wildfood");
         }
         else
         {
@@ -76,7 +80,12 @@ public class GrabResourceAction extends SimplePropertyObject implements ISpaceAc
         }
 
         ResourceManager rm = ResourceManager.getInstance();
-        rm.addResource(1, ResourceManager.WOOD, 1);
+        if(resource_wood) {
+            rm.addResource(1, ResourceManager.WOOD, 1);
+        }
+        else if(resource_food) {
+            rm.addResource(1, ResourceManager.FOOD, 1);
+        }
         // System.out.println("Object eaten: "+target);
 
         return null;
