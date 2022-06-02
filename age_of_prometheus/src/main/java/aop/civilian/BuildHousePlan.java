@@ -1,8 +1,7 @@
-package aop.dumbprey;
+package aop.civilian;
 
 import aop.MoveAction;
 import aop.ResourceManager;
-import jadex.bdiv3.runtime.IGoal;
 import jadex.bdiv3x.runtime.Plan;
 import jadex.commons.future.DelegationResultListener;
 import jadex.commons.future.Future;

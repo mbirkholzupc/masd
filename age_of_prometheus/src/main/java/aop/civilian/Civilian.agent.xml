@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	<H3>Basic non-fighting villager.</H3>
+	<H3>The dumb prey.</H3>
 
+	Exhibits very basic behavior for searching and
+	eating food. Does not flee explicitly from hunters.
 -->
 <agent xmlns="http://www.activecomponents.org/jadex-bdi"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -28,11 +30,33 @@
  		<belief name="myself" class="ISpaceObject">
  			<fact>$beliefbase.env.getAvatar($scope.getComponentDescription(), $scope.getAgentModel().getFullName())</fact>
  		</belief>
+
+ 		<!-- The nearest known food. -->
+ 		<belief name="nearest_wild_food" class="ISpaceObject"/>
+
+		<!-- The nearest known tree. -->
+		<belief name="nearest_tree" class="ISpaceObject"/>
 	</beliefs>
-	
+
+	<goals>
+		<achievegoal name="build_house_goal">
+		</achievegoal>
+		<performgoal name="grab_resources" retry="true" exclude="never">
+		</performgoal>
+	</goals>
+
 	<plans>
-		<plan name="civilian_plan">
-			<body class="CivilianPlan"/>
+		<plan name="build_house">
+			<body impl="BuildHousePlan"/>
+			<trigger>
+				<goal ref="build_house_goal" />
+			</trigger>
+		</plan>
+		<plan name="collect_resourses_plan">
+			<body class="CollectResourcesPlan"/>
+			<trigger>
+				<goal ref="grab_resources" />
+			</trigger>
 		</plan>
 	</plans>
 
@@ -47,7 +71,8 @@
 	<configurations>
 		<configuration name="default">
 			<plans>
-				<initialplan ref="civilian_plan"/>
+				<initialplan ref="collect_resourses_plan"/>
+				<!--<initialplan ref="build_house"/>-->
 			</plans>
 		</configuration>
 	</configurations>

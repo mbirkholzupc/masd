@@ -59,7 +59,7 @@ public class GrabResourceAction extends SimplePropertyObject implements ISpaceAc
         Integer wood = (Integer)avatar.getProperty(PROPERTY_WOOD);
         boolean resource_food = false;
         boolean resource_wood = false;
-        if(avatar.getType().equals("prey") && (target.getType().equals("tree") || target.getType().equals("wildfood")))
+        if(avatar.getType().equals("civilian") && (target.getType().equals("tree") || target.getType().equals("wildfood")))
         {
             wood = wood != null ? Integer.valueOf(wood.intValue() + 1) : Integer.valueOf(1);
             resource_wood = target.getType().equals("tree");

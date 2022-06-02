@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.lang.Math;
 
-import aop.civilian.CivilianPlan;
 import aop.extern.OpenSimplexNoise;
 import jadex.bdiv3x.runtime.Plan;
 import jadex.bridge.service.types.clock.IClockService;
@@ -182,14 +181,6 @@ public class InitMapProcess extends SimplePropertyObject implements ISpaceProces
 			}
 			*/
 
-			// Create some agents now
-			{
-				// Example villager. Need to set createcomponent="true" if you want it to create an agent.
-				// Right now, two are created. One here and one in xml.
-				props = new HashMap();
-				props.put(Space2D.PROPERTY_POSITION, new Vector2Int((int)1, (int)38));
-				grid.createSpaceObject("civilian", props, null);
-			}
 
 			// Czars - create in position 1, 1 but they aren't actually displayed
 			{
