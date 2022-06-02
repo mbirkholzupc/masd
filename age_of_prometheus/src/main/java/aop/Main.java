@@ -21,5 +21,8 @@ public class Main
 		IExternalAccess platform = Starter.createPlatform(PlatformConfigurationHandler.getDefaultNoGui()).get();
 		CreationInfo ci = new CreationInfo().setFilename("AgeOfPrometheus.application.xml");
 		platform.createComponent(ci).get();
+
+		// Count 1 person who is created in xml file
+		ResourceManager.getInstance().addResource(1,ResourceManager.POPULATION, 1);
 	}
 }

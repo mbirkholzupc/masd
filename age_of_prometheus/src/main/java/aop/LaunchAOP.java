@@ -24,6 +24,9 @@ public class LaunchAOP
 		CreationInfo ci = new CreationInfo().setFilename("AgeOfPrometheus.application.xml");
 		platform.createComponent(ci).get();
 
+		// Count 1 person who is created in xml file
+		ResourceManager.getInstance().addResource(1,ResourceManager.POPULATION, 1);
+
 		// The InitMapProcess:start method is called at startup and initializes things.
 
 		// EXAMPLE CODE TO SHOW RESOURCE MANAGER USAGE (TODO: Delete after it is actually used in code)
