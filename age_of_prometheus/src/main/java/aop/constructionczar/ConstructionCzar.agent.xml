@@ -36,6 +36,8 @@
 	<goals>
 		<achievegoal name="command_house_construction_goal">
 		</achievegoal>
+		<achievegoal name="create_new_civilian_goal">
+		</achievegoal>
 	</goals>
 	
 	<plans>
@@ -46,6 +48,12 @@
 			<body impl="CommandHouseConstructionPlan"/>
 			<trigger>
 				<goal ref="command_house_construction_goal" />
+			</trigger>
+		</plan>
+		<plan name="createcivilian_plan">
+			<body impl="CreateNewCivilianPlan"/>
+			<trigger>
+				<goal ref="create_new_civilian_goal" />
 			</trigger>
 		</plan>
 	</plans>

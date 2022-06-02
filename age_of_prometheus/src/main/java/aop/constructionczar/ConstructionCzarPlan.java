@@ -51,6 +51,12 @@ public class ConstructionCzarPlan extends Plan
 				dispatchSubgoalAndWait(house_goal);
 				System.out.println("Done waiting.");
 			}
+			else
+			{
+				// Maybe we can make a new person. It's ok if it fails.
+				IGoal house_goal = createGoal("create_new_civilian_goal");
+				dispatchSubgoalAndWait(house_goal);
+			}
 
 		}
     }
