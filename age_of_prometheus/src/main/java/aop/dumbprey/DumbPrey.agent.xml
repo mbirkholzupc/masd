@@ -32,18 +32,31 @@
  		</belief>
 
  		<!-- The nearest known food. -->
- 		<belief name="nearest_food" class="ISpaceObject"/>
+ 		<belief name="nearest_wild_food" class="ISpaceObject"/>
 
 		<!-- The nearest known tree. -->
 		<belief name="nearest_tree" class="ISpaceObject"/>
 	</beliefs>
-	
+
+	<goals>
+		<achievegoal name="build_house_goal">
+		</achievegoal>
+		<performgoal name="grab_trees" retry="true" exclude="never">
+		</performgoal>
+	</goals>
+
 	<plans>
 		<plan name="build_house">
 			<body impl="BuildHousePlan"/>
+			<trigger>
+				<goal ref="build_house_goal" />
+			</trigger>
 		</plan>
 		<plan name="dumbprey_plan">
 			<body class="DumbPreyPlan"/>
+			<trigger>
+				<goal ref="grab_trees" />
+			</trigger>
 		</plan>
 	</plans>
 
@@ -58,8 +71,8 @@
 	<configurations>
 		<configuration name="default">
 			<plans>
-				<!--<initialplan ref="dumbprey_plan"/>-->
-				<initialplan ref="build_house"/>
+				<initialplan ref="dumbprey_plan"/>
+				<!--<initialplan ref="build_house"/>-->
 			</plans>
 		</configuration>
 	</configurations>

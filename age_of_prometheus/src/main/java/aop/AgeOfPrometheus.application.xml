@@ -134,6 +134,24 @@
 						<env:componenttype name="CleverPrey"/>
 					</env:componenttypes>
 				</env:percepttype>
+				<env:percepttype name="wild_food_seen" objecttype="wildfood">
+					<env:componenttypes>
+						<env:componenttype name="DumbPrey"/>
+						<env:componenttype name="CleverPrey"/>
+					</env:componenttypes>
+				</env:percepttype>
+				<env:percepttype name="wild_food_out_of_sight" objecttype="wildfood">
+					<env:componenttypes>
+						<env:componenttype name="DumbPrey"/>
+						<env:componenttype name="CleverPrey"/>
+					</env:componenttypes>
+				</env:percepttype>
+				<env:percepttype name="wild_food_grabbed" objecttype="wildfood">
+					<env:componenttypes>
+						<env:componenttype name="DumbPrey"/>
+						<env:componenttype name="CleverPrey"/>
+					</env:componenttypes>
+				</env:percepttype>
 				<env:percepttype name="food_out_of_sight" objecttype="food">
 					<env:componenttypes>
 						<env:componenttype name="DumbPrey"/>
@@ -205,7 +223,10 @@
 							new String[]{"obstacle_gone", "disappeared", "destroyed"},
 							new String[]{"tree_seen", "appeared", "created"},
 							new String[]{"tree_out_of_sight", "disappeared"},
-							new String[]{"tree_grabbed", "destroyed"}
+							new String[]{"tree_grabbed", "destroyed"},
+							new String[]{"wild_food_seen", "appeared", "created"},
+							new String[]{"wild_food_out_of_sight", "disappeared"},
+							new String[]{"wild_food_grabbed", "destroyed"}
 						}
 					</env:property>
 				</env:perceptgenerator>
@@ -233,7 +254,10 @@
 						{
 							new String[]{"tree_out_of_sight", "unset", "nearest_tree", "isFact"},
 							new String[]{"tree_seen", "set", "nearest_tree", "isNearer"},
-							new String[]{"tree_grabbed", "unset", "nearest_tree", "isFact"}
+							new String[]{"tree_grabbed", "unset", "nearest_tree", "isFact"},
+							new String[]{"wild_food_out_of_sight", "unset", "nearest_wild_food", "isFact"},
+							new String[]{"wild_food_seen", "set", "nearest_wild_food", "isNearer"},
+							new String[]{"wild_food_grabbed", "unset", "nearest_wild_food", "isFact"}
 						}
 					</env:property>
 					<env:property name="isNearer" dynamic="true">

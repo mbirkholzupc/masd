@@ -1,6 +1,8 @@
 package aop.dumbprey;
 
 import aop.MoveAction;
+import aop.ResourceManager;
+import jadex.bdiv3.runtime.IGoal;
 import jadex.bdiv3x.runtime.Plan;
 import jadex.commons.future.DelegationResultListener;
 import jadex.commons.future.Future;
@@ -52,7 +54,7 @@ public class BuildHousePlan extends Plan {
                 }
             }
         }
-        /*
+        /* Print onlineAStarGrid
         System.out.println("onlineAStarGrid");
         for (int i=0; i<gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
@@ -80,15 +82,20 @@ public class BuildHousePlan extends Plan {
                 }
                 catch(RuntimeException e)
                 {
-                    System.out.println("Move failed: "+e);
                 }
             } else {
-                // Spawn house
-                Map houseProps = new HashMap();
-                houseProps.put(Space2D.PROPERTY_POSITION, emptyGridPosition);
-                env.createSpaceObject("house", houseProps, null);
+                break;
             }
         }
+        // Spawn house
+        Map houseProps = new HashMap();
+        houseProps.put(Space2D.PROPERTY_POSITION, emptyGridPosition);
+        env.createSpaceObject("house", houseProps, null);
+        ResourceManager rm = ResourceManager.getInstance();
+        rm.addResource(1, ResourceManager.HOUSING, 1);
+        // Create new top-level goal.
+        // IGoal grab_trees_goal = createGoal("grab_trees");
+        // ispatchTopLevelGoal(grab_trees_goal);
     }
 
     private String getDirectionAccordingToOnlineAStar(IVector2 agentPos, IVector2 emptyGridPosition, int[][] onlineAStarGrid){

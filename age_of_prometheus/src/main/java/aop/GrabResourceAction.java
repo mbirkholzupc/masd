@@ -41,7 +41,6 @@ public class GrabResourceAction extends SimplePropertyObject implements ISpaceAc
     public Object perform(Map parameters, IEnvironmentSpace space)
     {
         // System.out.println("eat action: "+parameters);
-        System.out.println("GRABBING...");
         Grid2D grid = (Grid2D)space;
         IComponentDescription owner = (IComponentDescription)parameters.get(ISpaceAction.ACTOR_ID);
         ISpaceObject avatar = grid.getAvatar(owner);
@@ -58,7 +57,7 @@ public class GrabResourceAction extends SimplePropertyObject implements ISpaceAc
         }
 
         Integer wood = (Integer)avatar.getProperty(PROPERTY_WOOD);
-        if(avatar.getType().equals("prey") && target.getType().equals("tree"))
+        if(avatar.getType().equals("prey") && (target.getType().equals("tree") || target.getType().equals("wildfood")))
         {
             wood = wood != null ? Integer.valueOf(wood.intValue() + 1) : Integer.valueOf(1);
         }

@@ -3,7 +3,10 @@ package aop.dumbprey;
 import java.util.HashMap;
 import java.util.Map;
 
+import aop.EconomicPolicy;
 import aop.MoveAction;
+import aop.ResourceManager;
+import jadex.bdiv3.runtime.IGoal;
 import jadex.bdiv3x.runtime.Plan;
 import jadex.commons.future.DelegationResultListener;
 import jadex.commons.future.Future;
@@ -31,14 +34,21 @@ public class DumbPreyPlan extends Plan
 		Grid2D	env	= (Grid2D)getBeliefbase().getBelief("env").getFact();
 		ISpaceObject	myself	= (ISpaceObject)getBeliefbase().getBelief("myself").getFact();
 		String	lastdir	= null;
+		EconomicPolicy ep = EconomicPolicy.getInstance();
 		while(true)
 		{
+			int needed_resourse = ep.readNeededResource(0);
+			String belife_to_check = needed_resourse == ResourceManager.FOOD ? "nearest_wild_food" : "nearest_tree";
+			if(false/*build house message received*/){
+				IGoal build_house_goal = createGoal("build_house_goal");
+				dispatchSubgoalAndWait(build_house_goal);
+			}
 //			System.out.println("nearest food for: "+getAgentName()+", "+getBeliefbase().getBelief("nearest_food").getFact());
 
 			// Get current position.
 			IVector2	pos	= (IVector2)myself.getProperty(Space2D.PROPERTY_POSITION);
 
-			ISpaceObject	tree	= (ISpaceObject)getBeliefbase().getBelief("nearest_tree").getFact();
+			ISpaceObject	tree	= (ISpaceObject)getBeliefbase().getBelief(belife_to_check).getFact();
 			boolean isOneStepAway = false;
 			if(tree!=null){
 				isOneStepAway = getManhattanDistance(pos, (IVector2)tree.getProperty(Space2D.PROPERTY_POSITION)) == 1;
@@ -50,16 +60,14 @@ public class DumbPreyPlan extends Plan
 				{
 					Map<String, Object> params = new HashMap<String, Object>();
 					params.put(ISpaceAction.ACTOR_ID, getComponentDescription());
-					System.out.println("tree.getType() " + tree.getType());
 					params.put(ISpaceAction.OBJECT_ID, tree);
 					Future<Void> fut = new Future<Void>();
 					env.performSpaceAction("grab", params, new DelegationResultListener<Void>(fut));
 					fut.get();
-					// getBeliefbase().getBelief("nearest_tree").setFact(null);
+					// getBeliefbase().getBelief("belife_to_check").setFact(null);
 				}
 				catch(RuntimeException e)
 				{
-					System.out.println("Grab failed: "+e);
 				}
 			}
 
@@ -80,7 +88,7 @@ public class DumbPreyPlan extends Plan
 					else
 					{
 						// Tree unreachable.
-						getBeliefbase().getBelief("nearest_tree").setFact(null);
+						getBeliefbase().getBelief("belife_to_check").setFact(null);
 					}
 				}
 
@@ -110,9 +118,8 @@ public class DumbPreyPlan extends Plan
 				catch(RuntimeException e)
 				{
 					// Move failed, forget about food and turn 90 degrees.
-					getBeliefbase().getBelief("nearest_tree").setFact(null);
+					getBeliefbase().getBelief(belife_to_check).setFact(null);
 
-					System.out.println("Move failed: "+e);
 					if(MoveAction.DIRECTION_LEFT.equals(lastdir) || MoveAction.DIRECTION_RIGHT.equals(lastdir))
 					{
 						lastdir	= Math.random()>0.5 ? MoveAction.DIRECTION_UP : MoveAction.DIRECTION_DOWN;

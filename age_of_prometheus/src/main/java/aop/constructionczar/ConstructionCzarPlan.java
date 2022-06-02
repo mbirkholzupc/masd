@@ -30,7 +30,6 @@ public class ConstructionCzarPlan extends Plan
 	{
         Grid2D	env	= (Grid2D)getBeliefbase().getBelief("env").getFact();
         ISpaceObject	myself	= (ISpaceObject)getBeliefbase().getBelief("myself").getFact();
-
         System.out.println("Construction Czar plan running...");
     }
 }
